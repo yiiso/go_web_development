@@ -21,5 +21,5 @@ func main() {
 	r.GET("/list", contollerTest.Search)
 	r.GET("/delete", contollerTest.Delete)
 
-	r.Run(":8989") // listen and serve on 0.0.0.0:8080
+	_ = r.Run(":8989") // listen and serve on 0.0.0.0:8080
 }
