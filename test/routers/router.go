@@ -41,6 +41,8 @@ func Register() *gin.Engine {
 		v2.GET("user/first", user.First)
 		v2.GET("user/update", user.Update)
 		v2.GET("user/delete", user.Delete)
+		v2.GET("country", user.GetCountry)
+		v2.GET("guide", user.GetGuideCard)
 	}
 
 	//defer articles.Db.Close()

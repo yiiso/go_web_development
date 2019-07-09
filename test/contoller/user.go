@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
-	_ "test/model"
-	mysql "test/model"
+	_ "test/models"
+	mysql "test/models"
 	"time"
 )
 

@@ -6,7 +6,7 @@ import (
 	"github.com/go-ini/ini"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"os"
-	mysql "test/model"
+	"test/models"
 	"test/routers"
 )
 
@@ -17,7 +17,7 @@ type LoginForm struct {
 
 func main() {
 
-	defer mysql.GetGorm().Close()
+	defer models.GetGorm().Close()
 
 	// 加载配置
 	cfg, err := ini.Load("conf/app.ini")
