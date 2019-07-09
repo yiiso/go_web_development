@@ -1,0 +1,33 @@
+server {
+  listen       80;
+  server_name  platform.keketour.me;
+  #location /sockjs-node {
+  #  proxy_pass  http://127.0.0.1:81;
+  #}
+  #location / {
+  #  proxy_pass  http://127.0.0.1:81;
+  #}
+
+  root E:/www/platform/platform-new-web/dist;
+  location /operation {
+    try_files $uri $uri/ /operation.html;
+  }
+  location /sale {
+    try_files $uri $uri/ /sale.html;
+  }
+  location /change {
+    try_files $uri $uri/ /change.html;
+  }
+  location /index {
+    try_files $uri $uri/ /index.html;
+  }
+  location /running {
+    try_files $uri $uri/ /running.html;
+  }
+  location /setting {
+    try_files $uri $uri/ /setting.html;
+  }
+  location /statistics {
+    try_files $uri $uri/ /statistics.html;
+  }
+}
