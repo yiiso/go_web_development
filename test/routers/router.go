@@ -43,6 +43,7 @@ func Register() *gin.Engine {
 		v1.Any("login", user.Login)
 		v1.GET("logout", user.Logout)
 		v1.GET("register", user.Register)
+		v1.GET("migrate",user.Migrate)
 	}
 
 	v2 := r.Group("/").Use(MiddleWare.Auth)
@@ -61,3 +62,4 @@ func Register() *gin.Engine {
 	//defer articles.Db.Close()
 	return r
 }
+
