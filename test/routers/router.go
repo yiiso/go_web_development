@@ -4,6 +4,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
+	"github.com/go-ini/ini"
 	"test/MiddleWare"
 	user "test/contoller"
 )
@@ -12,7 +13,20 @@ func Register() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Recovery())
 
-	store, err := redis.NewStore(10, "tcp", "192.168.10.10:6379", "", []byte("secret"))
+	var cfg *ini.File
+	var iniE error
+	cfg, iniE = ini.Load("conf/database.ini", "conf/app.ini")
+	if iniE != nil {
+		panic("config don't reader import!")
+	}
+
+	mode := cfg.Section("").Key("app_mode").String()
+
+	host := cfg.Section(mode).Key("redis.host").String()
+	// 端口
+	port := cfg.Section(mode).Key("redis.port").String()
+
+	store, err := redis.NewStore(10, "tcp", host+":"+port, "", []byte("secret"))
 
 	if err != nil {
 		panic("redis don't connection!")
@@ -30,7 +44,6 @@ func Register() *gin.Engine {
 		v1.GET("logout", user.Logout)
 		v1.GET("register", user.Register)
 	}
-
 
 	v2 := r.Group("/").Use(MiddleWare.Auth)
 	{
