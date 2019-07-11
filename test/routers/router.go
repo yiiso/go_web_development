@@ -5,13 +5,24 @@ import (
 	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
 	"github.com/go-ini/ini"
+	"os"
 	"test/MiddleWare"
 	user "test/contoller"
+	"time"
 )
 
 func Register() *gin.Engine {
-	r := gin.New()
-	r.Use(gin.Recovery())
+
+	/*	gin.DisableConsoleColor()//禁用请求日志控制台字体颜色
+
+		r := gin.New()
+		r.Use(gin.Logger(),gin.Recovery())*/
+
+	gin.DisableConsoleColor() //保存到文件不需要颜色
+	file, _ := os.Create("logs/" + time.Now().Format("2006-01-02") + ".log")
+	gin.DefaultWriter = file
+	//gin.DefaultWriter = io.MultiWriter(file) 效果是一样的
+	r := gin.Default()
 
 	var cfg *ini.File
 	var iniE error
@@ -43,7 +54,9 @@ func Register() *gin.Engine {
 		v1.Any("login", user.Login)
 		v1.GET("logout", user.Logout)
 		v1.GET("register", user.Register)
-		v1.GET("migrate",user.Migrate)
+		v1.GET("migrate", user.Migrate)
+		v1.GET("wx", user.WxApi)
+
 	}
 
 	v2 := r.Group("/").Use(MiddleWare.Auth)
@@ -62,4 +75,3 @@ func Register() *gin.Engine {
 	//defer articles.Db.Close()
 	return r
 }
-

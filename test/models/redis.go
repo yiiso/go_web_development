@@ -2,7 +2,6 @@ package models
 
 import (
 	"fmt"
-	"github.com/go-ini/ini"
 	"github.com/gomodule/redigo/redis"
 	"os"
 	"time"
@@ -12,16 +11,10 @@ var redisPool *redis.Pool
 
 func init() {
 	var err error
-	var cfg *ini.File
 	var maxIdleConns int
 	var maxOpenConns int
 
-	// load配置
-	cfg, err = ini.Load("conf/database.ini", "conf/app.ini")
-	if err != nil {
-		fmt.Printf("%v", err)
-		os.Exit(1)
-	}
+	cfg := GetCfg()
 	// 运行模式
 	mode := cfg.Section("").Key("app_mode").String()
 	// 主机
