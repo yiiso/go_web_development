@@ -55,7 +55,7 @@ func Register() *gin.Engine {
 		v1.GET("logout", user.Logout)
 		v1.GET("register", user.Register)
 		v1.GET("migrate", user.Migrate)
-		v1.GET("wx", user.WxApi)
+		v1.Any("wx", user.WxApi)
 
 	}
 
